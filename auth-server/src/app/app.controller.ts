@@ -1,19 +1,28 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 
 @Controller()
 export class AppController {
     constructor(private readonly AppService:AppService) {}
-
+    
+    @UseGuards(LocalAuthGuard)
     @Post('login')
-    login():any {
-        return this.AppService.login();
+    login(@Request() req):any {
+        return {
+            message: 'Login successful',
+        };
     }
 
-    @Post('protected')
-    protected():any {
-        return this.AppService.protected();
+    @UseGuards(AuthenticatedGuard)
+    @Get('protected')
+    protected(@Request() req):any {
+        return req.user;
     }
+}
+
+
 
     // @Post('register')
     // register():any {
@@ -59,4 +68,3 @@ export class AppController {
     // all():any {
     //     return this.AppService.all();
     // }
-}
