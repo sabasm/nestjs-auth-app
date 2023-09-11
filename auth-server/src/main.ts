@@ -11,11 +11,12 @@ async function bootstrap() {
   // Add basic security policies including CSP
   app.use(helmet());
 
-    app.enableCors({
-      origin: config.CORS_ORIGIN,
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      credentials: true,
-    });
+  // Enable CORS
+  app.enableCors({
+    origin: config.CORS_ORIGIN,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
 
   // Session config
   app.use(
