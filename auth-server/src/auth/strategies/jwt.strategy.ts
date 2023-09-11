@@ -3,9 +3,10 @@ import { PassportStrategy } from '@nestjs/passport';
 import config from 'config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from '../../users/users.service';
+import { IAuthStrategy } from './auth.strategy.interface';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy) implements IAuthStrategy {
   constructor(private readonly UsersService: UsersService) {
     super({
       ignoreExpiration: false,
